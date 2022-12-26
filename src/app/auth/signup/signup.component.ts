@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
 
@@ -30,7 +31,31 @@ export class SignupComponent {
     validators: [this.matchPassword.validate]
   })
 
-  constructor(private matchPassword: MatchPassword, private uniqueUsername: UniqueUsername) { }
+  constructor(private matchPassword: MatchPassword, private uniqueUsername: UniqueUsername, private authService: AuthService) { }
 
-  onSubmit() { }
+  onSubmit() {
+    if (this.authForm.invalid) return
+
+    const credentials = {
+      username: this.authForm.value.username,
+      password: this.authForm.value.password,
+      passwordConfirmation: this.authForm.value.passwordConfirmation
+    }
+
+    this.authService.signup(credentials).subscribe({
+      next: response => {
+
+      },
+      error: err => {
+        if (!err.status) {
+          this.authForm.setErrors({
+            noConnection: true
+          })
+        } else {
+          this.authForm.setErrors({ unknownError: true })
+        }
+
+      }
+    })
+  }
 }

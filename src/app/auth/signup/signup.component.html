@@ -9,10 +9,14 @@
     <p *ngIf="authForm.errors['passwordsDontMatch']">
       Password and Password Confirmation don't match
     </p>
+    <p *ngIf="authForm.errors['noConnection']">
+      No internet connection available
+    </p>
+    <p *ngIf="authForm.errors['unknownError']">
+      Failed to Sign up, try again later.
+    </p>
   </div>
-
   <div>
     <button class="ui submit button primary">Submit</button>
   </div>
-  {{authForm.errors | json}}
 </form>
