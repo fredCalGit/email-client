@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
@@ -31,7 +32,12 @@ export class SignupComponent {
     validators: [this.matchPassword.validate]
   })
 
-  constructor(private matchPassword: MatchPassword, private uniqueUsername: UniqueUsername, private authService: AuthService) { }
+  constructor(
+    private matchPassword: MatchPassword,
+    private uniqueUsername: UniqueUsername,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   onSubmit() {
     if (this.authForm.invalid) return
@@ -44,7 +50,7 @@ export class SignupComponent {
 
     this.authService.signup(credentials).subscribe({
       next: response => {
-
+        this.router.navigateByUrl('/inbox')
       },
       error: err => {
         if (!err.status) {
