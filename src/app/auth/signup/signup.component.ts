@@ -60,7 +60,6 @@ export class SignupComponent {
         } else {
           this.authForm.setErrors({ unknownError: true })
         }
-
       }
     })
   }
