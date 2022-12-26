@@ -49,7 +49,7 @@ export class SignupComponent {
     }
 
     this.authService.signup(credentials).subscribe({
-      next: response => {
+      next: () => {
         this.router.navigateByUrl('/inbox')
       },
       error: err => {
