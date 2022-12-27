@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
+import { Email } from '../email';
 
 @Component({
   selector: 'app-email-create',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./email-create.component.css']
 })
 export class EmailCreateComponent {
+  showModal = false
+  email: Email
 
+  constructor(private authService: AuthService) {
+    this.email = {
+      id: '',
+      to: '',
+      subject: '',
+      html: '',
+      text: '',
+      from: `${this.authService.username}@angular-email.com`
+    }
+  }
 }

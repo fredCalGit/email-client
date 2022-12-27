@@ -10,6 +10,7 @@ export class InputComponent {
   @Input() label: string;
   @Input() control: FormControl;
   @Input('type') inputType: string;
+  @Input() controlType = 'input'
 
   constructor() { }
 
