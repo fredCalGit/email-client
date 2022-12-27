@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Email } from '../email';
 
@@ -11,10 +11,11 @@ export class EmailFormComponent {
   emailForm: FormGroup
 
   @Input() email: Email
+  @Output() emailSubmit = new EventEmitter()
 
   ngOnInit() {
     const { subject, from, to, text } = this.email
-    console.log(from)
+
     this.emailForm = new FormGroup<any>({
       to: new FormControl(to, [
         Validators.required,
@@ -30,4 +31,9 @@ export class EmailFormComponent {
     })
   }
 
+  onSubmit() {
+    if (this.emailForm.invalid) return
+
+    this.emailSubmit.emit(this.emailForm.value)
+  }
 }
